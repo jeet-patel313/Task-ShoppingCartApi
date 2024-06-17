@@ -1,0 +1,9 @@
+ShoppingCartApi/bin/
+ShoppingCartApi/obj/
+ShoppingCartApi/Properties/
+ShoppingCartApi/.env
+ShoppingCartApi/Migrations/
+
+ShoppingCartApi.Tests/
+ShoppingCartApi.Tests/bin/
+ShoppingCartApi.Tests/obj/

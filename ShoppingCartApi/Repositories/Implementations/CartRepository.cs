@@ -41,7 +41,8 @@ namespace ShoppingCartApi.Repositories.Implementation
         cart = new Cart
         {
           ProductId = cartContents.ProductId,
-          Quantity = cartContents.Quantity
+          Quantity = cartContents.Quantity,
+          Product = product
         };
         _context.Carts.Add(cart); // Add the new cart item.
       }
