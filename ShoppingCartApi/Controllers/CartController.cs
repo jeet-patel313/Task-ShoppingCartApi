@@ -36,7 +36,6 @@ namespace ShoppingCartApi.Controllers
     /// </returns>
     /// <response code="200">Returns the updated cart with all items.</response>
     /// <response code="400">If the quantity is less than or equal to zero.</response>
-    /// <response code="404">If the product is not found.</response>
     [HttpPost]
     public async Task<IActionResult> AddToCart([FromBody] CartRequestDto cartContents)
     {
@@ -50,10 +49,6 @@ namespace ShoppingCartApi.Controllers
       {
         var carts = await _cartService.AddToCart(cartContents);
         return Ok(carts);
-      }
-      catch (KeyNotFoundException ex)
-      {
-        return NotFound(ex.Message);
       }
       catch (ArgumentException ex)
       {

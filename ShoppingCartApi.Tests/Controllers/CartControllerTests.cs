@@ -29,7 +29,7 @@ namespace ShoppingCartApi.Tests.Controllers
     public async Task AddToCart_ProductNotFound_ShouldReturnNotFound()
     {
       // Arrange
-      var cartContents = new CartRequestDto { ProductId = 1, Quantity = 1 };
+      var cartContents = new CartRequestDto { Name = "Sample Product", Price = 9.99M, Quantity = 1 };
       _cartServiceMock.Setup(service => service.AddToCart(It.IsAny<CartRequestDto>())).ThrowsAsync(new KeyNotFoundException());
 
       // Act
@@ -44,7 +44,7 @@ namespace ShoppingCartApi.Tests.Controllers
     public async Task AddToCart_QuantityZero_ShouldReturnBadRequest()
     {
       // Arrange
-      var cartContents = new CartRequestDto { ProductId = 1, Quantity = 0 };
+      var cartContents = new CartRequestDto { Name = "Sample Product", Price = 9.99M, Quantity = 0 };
 
       // Act
       var result = await _cartController.AddToCart(cartContents);
@@ -58,10 +58,10 @@ namespace ShoppingCartApi.Tests.Controllers
     public async Task AddToCart_ValidProduct_ShouldReturnOk()
     {
       // Arrange
-      var cartContents = new CartRequestDto { ProductId = 1, Quantity = 2 };
+      var cartContents = new CartRequestDto { Name = "Sample Product", Price = 9.99M, Quantity = 2 };
       var cartResponse = new List<CartResponseDto>
             {
-                new CartResponseDto { ProductId = 1, ProductName = "Sample Product", ProductUnitPrice = 9.99M, Quantity = 2 }
+                new CartResponseDto { Name = "Sample Product", Price = 9.99M, Quantity = 2 }
             };
 
       _cartServiceMock.Setup(service => service.AddToCart(It.IsAny<CartRequestDto>())).ReturnsAsync(cartResponse);
@@ -73,7 +73,7 @@ namespace ShoppingCartApi.Tests.Controllers
       var actionResult = Assert.IsType<OkObjectResult>(result);
       var returnValue = Assert.IsType<List<CartResponseDto>>(actionResult.Value);
       Assert.Single(returnValue);
-      Assert.Equal(cartResponse.First().ProductId, returnValue.First().ProductId);  // Ensure System.Linq is used
+      Assert.Equal(cartResponse.First().Name, returnValue.First().Name);  // Ensure System.Linq is used
     }
 
     [Fact]
@@ -82,7 +82,7 @@ namespace ShoppingCartApi.Tests.Controllers
       // Arrange
       var cartResponse = new List<CartResponseDto>
             {
-                new CartResponseDto { ProductId = 1, ProductName = "Sample Product", ProductUnitPrice = 9.99M, Quantity = 2 }
+                new CartResponseDto { Name = "Sample Product", Price = 9.99M, Quantity = 2 }
             };
 
       _cartServiceMock.Setup(service => service.GetAllItems()).ReturnsAsync(cartResponse);
@@ -94,7 +94,7 @@ namespace ShoppingCartApi.Tests.Controllers
       var actionResult = Assert.IsType<OkObjectResult>(result);
       var returnValue = Assert.IsType<List<CartResponseDto>>(actionResult.Value);
       Assert.Single(returnValue);
-      Assert.Equal(cartResponse.First().ProductId, returnValue.First().ProductId);  // Ensure System.Linq is used
+      Assert.Equal(cartResponse.First().Name, returnValue.First().Name);  // Ensure System.Linq is used
     }
   }
 }
