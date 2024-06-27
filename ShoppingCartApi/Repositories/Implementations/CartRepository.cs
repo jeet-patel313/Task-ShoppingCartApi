@@ -26,16 +26,32 @@ namespace ShoppingCartApi.Repositories.Implementation
     /// <returns>The updated cart item.</returns>
     public async Task<Cart> AddToCart(CartRequestDto cartContents)
     {
-      // Create a new cart item.
-      var cart = new Cart
+      // Find product in the database based on productId.
+      var product = await _context.Products.FindAsync(cartContents.ProductId);
+      if (product == null)
       {
-        Name = cartContents.Name,
-        Price = cartContents.Price,
-        Quantity = cartContents.Quantity
-      };
+        throw new KeyNotFoundException("Product not found.");
+      }
 
-      // Add the new cart item.
-      _context.Carts.Add(cart);
+      // Find cart item in the database based on productId.
+      var cart = await _context.Carts.FindAsync(cartContents.ProductId);
+      if (cart == null)
+      {
+        // If the cart item does not exist, create a new cart item.
+        cart = new Cart
+        {
+          ProductId = cartContents.ProductId,
+          Quantity = cartContents.Quantity,
+          Product = product
+        };
+        _context.Carts.Add(cart); // Add the new cart item.
+      }
+      else
+      {
+        // If the cart item already exists, update the quantity.
+        cart.Quantity += cartContents.Quantity;
+        _context.Carts.Update(cart); // Update the existing cart item.
+      }
 
       // Save changes to the database.
       await _context.SaveChangesAsync();
@@ -48,7 +64,7 @@ namespace ShoppingCartApi.Repositories.Implementation
     /// <returns>A collection of Cart objects.</returns>
     public async Task<IEnumerable<Cart>> GetAllItems()
     {
-      return await _context.Carts.ToListAsync();
+      return await _context.Carts.Include(c => c.Product).ToListAsync();
     }
   }
 }

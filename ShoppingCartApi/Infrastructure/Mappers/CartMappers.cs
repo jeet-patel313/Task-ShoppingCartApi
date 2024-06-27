@@ -13,7 +13,10 @@ namespace ShoppingCartApi.Infrastructure.Mappers
     public CartProfile()
     {
       // Configures mappings between Cart and CartResponseDto.
-      CreateMap<Cart, CartResponseDto>().ReverseMap();
+      CreateMap<Cart, CartResponseDto>()
+          .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
+          .ForMember(dest => dest.ProductUnitPrice, opt => opt.MapFrom(src => src.Product.UnitPrice))
+          .ReverseMap();
     }
   }
 }
