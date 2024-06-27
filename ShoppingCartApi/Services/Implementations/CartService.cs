@@ -8,7 +8,6 @@ namespace ShoppingCartApi.Services.Implementations
   public class CartService : ICartService
   {
     private readonly ICartRepository _cartRepository;
-
     private readonly IMapper _mapper;
 
     // Constructor to initialize the service with the given repository and mapper.
@@ -44,7 +43,6 @@ namespace ShoppingCartApi.Services.Implementations
     {
       // Retrieve all cart items from repository.
       var carts = await _cartRepository.GetAllItems();
-
       // Convert the cart entities to DTOs and return them.
       return carts.Select(cart => _mapper.Map<CartResponseDto>(cart));
     }

@@ -73,7 +73,7 @@ namespace ShoppingCartApi.Tests.Controllers
       var actionResult = Assert.IsType<OkObjectResult>(result);
       var returnValue = Assert.IsType<List<CartResponseDto>>(actionResult.Value);
       Assert.Single(returnValue);
-      Assert.Equal(cartResponse.First().ProductId, returnValue.First().ProductId);  // Ensure System.Linq is used
+      Assert.Equal(cartResponse.First().ProductId, returnValue.First().ProductId);  // System.Linq import required
     }
 
     [Fact]

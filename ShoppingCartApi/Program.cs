@@ -42,14 +42,6 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// // Configure the HTTP request pipeline
-// if (app.Environment.IsDevelopment())
-// {
-//   // Use Swagger in development environment for API documentation
-//   app.UseSwagger();
-//   app.UseSwaggerUI();
-// }
-
 // Use Swagger in both development and production environments for API documentation
 app.UseSwagger();
 app.UseSwaggerUI(c =>

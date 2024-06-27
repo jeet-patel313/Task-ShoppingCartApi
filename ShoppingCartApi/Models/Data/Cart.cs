@@ -8,9 +8,7 @@ namespace ShoppingCartApi.Models.Data
     [Key]
     [ForeignKey("Product")]
     public int ProductId { get; set; }
-
     public Product Product { get; set; } = new Product();
-
     [Range(1, int.MaxValue, ErrorMessage = "Quantity must be greater than zero.")]
     public int Quantity { get; set; }
   }

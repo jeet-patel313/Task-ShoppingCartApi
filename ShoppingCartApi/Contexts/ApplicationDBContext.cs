@@ -8,7 +8,6 @@ namespace ShoppingCartApi.Contexts
     public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
 
     public DbSet<Cart> Carts { get; set; }
-
     public DbSet<Product> Products { get; set; }
 
     // Configures the entity mappings and relationships.
